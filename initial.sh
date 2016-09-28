@@ -10,6 +10,9 @@ keyserver.ubuntu.com
 lsb_dist=$(lsb_release -a -u 2>&1 | tr '[:upper:]' '[:lower:]' | grep -E 'id' | cut -d ':' -f 2 | tr -d '[[:space:]]')
 dist_version=$(lsb_release -a -u 2>&1 | tr '[:upper:]' '[:lower:]' | grep -E 'codename' | cut -d ':' -f 2 | tr -d '[[:space:]]')
 
+aptitude update && aptitude upgrade
+aptitude install sudo su apt-transport-https ca-certificates
+
 sh_c='sh -c'
 if [ "$user" != 'root' ]; then
 	if command_exists sudo; then
@@ -25,8 +28,6 @@ if [ "$user" != 'root' ]; then
 	fi
 fi
 
-$sh_c "aptitude update && aptitude upgrade"
-$sh_c "aptitude install apt-transport-https ca-certificates"
 for key_server in $key_servers ; do
 	$sh_c "apt-key adv --keyserver hkp://${key_server}:80 --recv-keys ${gpg_fingerprint}" && break
 done
