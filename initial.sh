@@ -8,7 +8,7 @@ keyserver.ubuntu.com
 "
 
 aptitude update && aptitude upgrade
-aptitude install sudo apt-transport-https ca-certificates
+aptitude install sudo apt-transport-https ca-certificates htop iotop iptraf
 
 for key_server in $key_servers ; do
 	apt-key adv --keyserver hkp://${key_server}:80 --recv-keys ${gpg_fingerprint} && break
