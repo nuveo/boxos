@@ -22,3 +22,8 @@ docker run hello-world
 curl -L https://github.com/docker/compose/releases/download/1.8.0/run.sh > /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 docker-compose
+
+echo "CUSTOM BASH"
+echo 'PS1="\e[0;32m\]\u@\h \w >\e[0m\] "' > /root/.bash_profile
+echo 'alias ll="ls --color -l"' >> /root/.bash_profile
+set -o history
