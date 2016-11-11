@@ -6,39 +6,41 @@ VER=$(lsb_release -sr)
 
 case $OS in
 Ubuntu)
-        OS="ubuntu"
-        APT=apt
-        case $VER in
-        16.04)
-                VER_NAME="xenial"
-                ;;
-        14.04)
-                VER_NAME="trusty"
-                ;;
-        12.04)
-                VER_NAME="precise"
-                ;;
-        *)
-                echo "Unsupported Ubuntu ${VER}, BoxOS recommend used Debian Jessie or Ubuntu 16.04"
-        esac
-        ;;
+	OS="ubuntu"
+	APT=apt
+	case $VER in
+	16.04)
+		VER_NAME="xenial"
+		;;
+	14.04)
+		VER_NAME="trusty"
+		;;
+	12.04)
+		VER_NAME="precise"
+		;;
+	*)
+		echo "Unsupported Ubuntu ${VER}, BoxOS recommend used Debian Jessie or Ubuntu 16.04"
+		;;
+	esac
+	;;
 Debian)
-        OS="debian"
-        APT=aptitude
-        case $VER in
-        8.*)
-                VER_NAME="jessie"
-                ;;
-        7.*)
-                VER_NAME="wheezy"
-                ;;
-        *)
-                echo "Unsupported Debian ${VER}, BoxOS recommend used Debian Jessie or Ubuntu 16.04"
-        esac
-        ;;
+	OS="debian"
+	APT=aptitude
+	case $VER in
+	8.*)
+		VER_NAME="jessie"
+		;;
+	7.*)
+		VER_NAME="wheezy"
+		;;
+	*)
+		echo "Unsupported Debian ${VER}, BoxOS recommend used Debian Jessie or Ubuntu 16.04"
+		;;
+	esac
+	;;
 *)
-        echo "Unsupported distribution, BoxOS recommend used Debian Jessie or Ubuntu 16.04"
-        break
+	echo "Unsupported distribution, BoxOS recommend used Debian Jessie or Ubuntu 16.04"
+	;;
 esac
 
 DOCKER_REPO="deb https://apt.dockerproject.org/repo ${OS}-${VER_NAME} main"
