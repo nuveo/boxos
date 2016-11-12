@@ -73,3 +73,15 @@ docker-compose
 echo "CUSTOM BASH"
 echo "PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[01;34m\]\w \$ \[\033[00m\]'" > /root/.bash_profile
 echo "alias ll='ls --color -l'" >> /root/.bash_profile
+echo "CUSTOM MOTD"
+MOTD=$(cat <<-END
+  _                ____   _____
+ | |              / __ \ / ____|
+ | |__   _____  _| |  | | (___
+ | '_ \ / _ \ \/ / |  | |\___ \
+ | |_) | (_) >  <| |__| |____) |
+ |_.__/ \___/_/\_\\____/|_____/
+ ============ Linux Containers
+END
+)
+echo ${MOTD} > /etc/motd
