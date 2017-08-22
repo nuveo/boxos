@@ -56,6 +56,9 @@ ${APT} install -y sudo apt-transport-https ca-certificates locales htop iotop ip
 localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 LANG=en_US.utf8
 
+echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf
+sysctl -w net.ipv4.ip_forward=1 >> /dev/null 2>&1
+
 for key_server in $key_servers ; do
         apt-key adv --keyserver hkp://${key_server}:80 --recv-keys ${gpg_fingerprint} && break
 done
@@ -77,7 +80,7 @@ cat > /etc/motd <<-END
   _                ____   _____
  | |              / __ \ / ____|
  | |__   _____  _| |  | | (___
- | '_ \ / _ \ \/ / |  | |\___ \ 
+ | '_ \ / _ \ \/ / |  | |\___ \
  | |_) | (_) >  <| |__| |____) |
  |_.__/ \___/_/\_\\\____/|_____/
  ============ Linux Containers
