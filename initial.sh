@@ -3,11 +3,11 @@
 OS=$(lsb_release -si)
 ARCH=$(uname -m | sed 's/x86_//;s/i[3-6]86/32/')
 VER=$(lsb_release -sr)
+APT=apt
 
 case $OS in
 Ubuntu)
 	OS="ubuntu"
-	APT=apt
 	case $VER in
 	16.04)
 		VER_NAME="xenial"
@@ -25,7 +25,6 @@ Ubuntu)
 	;;
 Debian)
 	OS="debian"
-	APT=aptitude
 	case $VER in
 	8.*)
 		VER_NAME="jessie"
