@@ -4,6 +4,7 @@ OS=$(lsb_release -si)
 ARCH=$(uname -m | sed 's/x86_//;s/i[3-6]86/32/')
 VER=$(lsb_release -sr)
 APT=apt
+TOPIC_IDENT="=> "
 
 case $OS in
 Ubuntu)
@@ -51,14 +52,18 @@ pgp.mit.edu
 keyserver.ubuntu.com
 "
 
+echo "${TOPIC_IDENT}UPGRADE SYSTEM"
 ${APT} update && ${APT} upgrade -y
+echo "${TOPIC_IDENT}INSTALL OS TOOLS"
 ${APT} install -y sudo apt-transport-https ca-certificates locales htop iotop iptraf
 localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 LANG=en_US.utf8
 
+echo "${TOPIC_IDENT}KERNEL CONFIG"
 echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf
 sysctl -w net.ipv4.ip_forward=1 >> /dev/null 2>&1
 
+echo "${TOPIC_IDENT}INSTALL DOCKER TOOLS"
 for key_server in $key_servers ; do
         apt-key adv --keyserver hkp://${key_server}:80 --recv-keys ${gpg_fingerprint} && break
 done
@@ -72,7 +77,11 @@ curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VER
 chmod +x /usr/local/bin/docker-compose
 docker-compose
 
-echo "CUSTOM BASH"
+echo "${TOPIC_IDENT}INSTALL CTOP"
+wget https://github.com/bcicen/ctop/releases/download/v0.6.1/ctop-0.6.1-linux-amd64 -O /usr/local/bin/ctop
+chmod +x /usr/local/bin/ctop
+
+echo "${TOPIC_IDENT}CUSTOM BASH"
 echo "PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[01;34m\]\w \$ \[\033[00m\]'" > /root/.bash_profile
 echo "alias ll='ls --color -l'" >> /root/.bash_profile
 echo "CUSTOM MOTD"
