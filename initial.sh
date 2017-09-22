@@ -81,6 +81,11 @@ echo "${TOPIC_IDENT}INSTALL CTOP"
 wget https://github.com/bcicen/ctop/releases/download/v0.6.1/ctop-0.6.1-linux-amd64 -O /usr/local/bin/ctop
 chmod +x /usr/local/bin/ctop
 
+echo "${TOPIC_IDENT}KERNEL TUNNING"
+echo "${TOPIC_IDENT}${TOPIC_IDENT}IPV4 FORWARD"
+echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf
+sysctl -w net.ipv4.ip_forward=1 >> /dev/null 2>&1
+
 echo "${TOPIC_IDENT}CUSTOM BASH"
 echo "PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[01;34m\]\w \$ \[\033[00m\]'" > /root/.bash_profile
 echo "alias ll='ls --color -l'" >> /root/.bash_profile
