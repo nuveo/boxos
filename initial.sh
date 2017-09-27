@@ -27,6 +27,9 @@ Ubuntu)
 Debian)
 	OS="debian"
 	case $VER in
+	9.*)
+		VER_NAME="stretch"
+		;;
 	8.*)
 		VER_NAME="jessie"
 		;;
