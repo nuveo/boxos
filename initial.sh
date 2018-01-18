@@ -47,7 +47,7 @@ Debian)
 esac
 
 DOCKER_REPO="deb https://apt.dockerproject.org/repo ${OS}-${VER_NAME} main"
-DOCKER_COMPOSE_VERSION="1.13.0"
+DOCKER_COMPOSE_VERSION="1.18.0"
 gpg_fingerprint="58118E89F3A912897C070ADBF76221572C52609D"
 key_servers="
 ha.pool.sks-keyservers.net
