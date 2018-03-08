@@ -58,7 +58,7 @@ keyserver.ubuntu.com
 echo "${TOPIC_IDENT}UPGRADE SYSTEM"
 ${APT} update && ${APT} upgrade -y
 echo "${TOPIC_IDENT}INSTALL OS TOOLS"
-${APT} install -y sudo apt-transport-https ca-certificates locales htop iotop iptraf
+${APT} install -y sudo apt-transport-https ca-certificates locales htop iotop iptraf make
 localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 LANG=en_US.utf8
 
