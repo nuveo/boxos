@@ -60,7 +60,6 @@ esac
 
 DOCKER_REPO="deb [arch=${ARCH}] https://download.docker.com/linux/${OS} ${VER_NAME} stable"
 DOCKER_COMPOSE_VERSION="1.19.0"
-#gpg_fingerprint="58118E89F3A912897C070ADBF76221572C52609D"
 gpg_fingerprint="9DC858229FC7DD38854AE2D88D81803C0EBFCD88"
 key_servers="https://download.docker.com/linux/${OS}/gpg"
 
