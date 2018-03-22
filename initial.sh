@@ -46,19 +46,28 @@ Debian)
 	;;
 esac
 
-DOCKER_REPO="deb https://apt.dockerproject.org/repo ${OS}-${VER_NAME} main"
-DOCKER_COMPOSE_VERSION="1.18.0"
-gpg_fingerprint="58118E89F3A912897C070ADBF76221572C52609D"
-key_servers="
-ha.pool.sks-keyservers.net
-pgp.mit.edu
-keyserver.ubuntu.com
-"
+case $ARCH in
+64)
+    ARCH="amd64"
+    ;;
+32)
+    ARCH="armhf"
+    ;;
+*)
+    echo "Unsupported arch."
+    ;;
+esac
+
+DOCKER_REPO="deb [arch=${ARCH}] https://download.docker.com/linux/${OS} ${VER_NAME} stable"
+DOCKER_COMPOSE_VERSION="1.19.0"
+gpg_fingerprint="9DC858229FC7DD38854AE2D88D81803C0EBFCD88"
+key_servers="https://download.docker.com/linux/${OS}/gpg"
 
 echo "${TOPIC_IDENT}UPGRADE SYSTEM"
+echo "LC_ALL=en_US.UTF-8" >> /etc/environment
 ${APT} update && ${APT} upgrade -y
 echo "${TOPIC_IDENT}INSTALL OS TOOLS"
-${APT} install -y sudo apt-transport-https ca-certificates locales htop iotop iptraf make
+${APT} install -y sudo apt-transport-https ca-certificates locales htop iotop iptraf make curl gnupg2 software-properties-common
 localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 LANG=en_US.utf8
 
@@ -67,15 +76,14 @@ echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf
 sysctl -w net.ipv4.ip_forward=1 >> /dev/null 2>&1
 
 echo "${TOPIC_IDENT}INSTALL DOCKER TOOLS"
-for key_server in $key_servers ; do
-        apt-key adv --keyserver hkp://${key_server}:80 --recv-keys ${gpg_fingerprint} && break
-done
+curl -fsSL $key_servers | apt-key add -
 apt-key adv -k ${gpg_fingerprint} >/dev/null
 mkdir -p /etc/apt/sources.list.d
 echo ${DOCKER_REPO} > /etc/apt/sources.list.d/docker.list
-sleep 3; ${APT} update -y; ${APT} install -y -q docker-engine
+sleep 3; ${APT} update -y; ${APT} install -y -q docker-ce
 service docker start
 docker run hello-world
+docker system prune -f
 curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/run.sh > /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 docker-compose
