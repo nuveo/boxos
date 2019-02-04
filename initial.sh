@@ -9,20 +9,7 @@ TOPIC_IDENT="=> "
 case $OS in
 Ubuntu)
 	OS="ubuntu"
-	case $VER in
-	16.04)
-		VER_NAME="xenial"
-		;;
-	14.04)
-		VER_NAME="trusty"
-		;;
-	12.04)
-		VER_NAME="precise"
-		;;
-	*)
-		echo "Unsupported Ubuntu ${VER}, BoxOS recommend used Debian Jessie or Ubuntu 16.04"
-		;;
-	esac
+	VER_NAME="$(lsb_release -cs)"
 	;;
 Debian)
 	OS="debian"
@@ -37,7 +24,7 @@ Debian)
 		VER_NAME="wheezy"
 		;;
 	*)
-		echo "Unsupported Debian ${VER}, BoxOS recommend used Debian Jessie or Ubuntu 16.04"
+		echo "Unsupported Debian ${VER}, BoxOS recommend used Debian Jessie or Ubuntu 18.04"
 		;;
 	esac
 	;;
@@ -105,7 +92,7 @@ cat > /etc/motd <<-END
   _                ____   _____
  | |              / __ \ / ____|
  | |__   _____  _| |  | | (___
- | '_ \ / _ \ \/ / |  | |\___ \ 
+ | '_ \ / _ \ \/ / |  | |\___ \
  | |_) | (_) >  <| |__| |____) |
  |_.__/ \___/_/\_\\\____/|_____/
  ============ Linux Containers
